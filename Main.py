@@ -129,7 +129,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Top 10 mobile brands based on percentage of transaction")
+            st.subheader("Top 10 mobile brands based on percentage of transaction")
             fig=px.bar(df,x="brands",y="Percentage")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -144,7 +144,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Top 10 Registered-users based on States and District(pincode)")
+            st.subheader("Top 10 Registered-users based on States and District(pincode)")
             fig=px.bar(df,x="State",y="RegisteredUser")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -159,7 +159,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Top 10 Districts based on states and amount of transaction")
+            st.subheader("Top 10 Districts based on states and amount of transaction")
             fig=px.bar(df,x="State",y="Transaction_amount")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -174,7 +174,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Least 10 Districts based on states and amount of transaction")
+            st.subheader("Least 10 Districts based on states and amount of transaction")
             fig=px.bar(df,x="State",y="Transaction_amount")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -189,7 +189,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Least 10 registered-users based on Districts and states")
+            st.subheader("Least 10 registered-users based on Districts and states")
             fig=px.bar(df,x="State",y="RegisteredUser")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -204,7 +204,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Top 10 transactions_type based on states and transaction_amount")
+            st.subheader("Top 10 transactions_type based on states and transaction_amount")
             fig=px.bar(df,x="State",y="Transaction_amount")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
