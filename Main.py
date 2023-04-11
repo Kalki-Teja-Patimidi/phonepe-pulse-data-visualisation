@@ -99,7 +99,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Top 10 states based on type and amount of transaction")
+            st.subheader("Top 10 states based on type and amount of transaction")
             fig=px.bar(df,x="State",y="Transaction_amount")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
@@ -114,7 +114,7 @@ if SELECT == "Basic insights":
         with col1:
             st.write(df)
         with col2:
-            st.title("Least 10 states based on type and amount of transaction")
+            st.subheader("Least 10 states based on type and amount of transaction")
             fig=px.bar(df,x="State",y="Transaction_amount")
             tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
             with tab1:
