@@ -27,7 +27,7 @@ vedio2=vedio_file1.read()
 st.set_page_config(page_title='PhonePe Pulse',page_icon=phn,layout='wide')
 st.title(' PhonePe Pulse Data Visualization ')
 
-path="C:/Users/Admin/Desktop/phonepe project/pulse/data/aggregated/transaction/country/india/state/"
+path="data/aggregated/transaction/country/india/state/"
 Agg_state_list=os.listdir(path)
 #Agg_state_list
 #Agg_state_list--> to get the list of states in India
@@ -64,7 +64,7 @@ df_aggregated_transaction=pd.DataFrame(clm)
 
 # TO GET THE DATA-FRAME OF AGGREGATED <--> USER
 
-path2 = "C:/Users/Admin/Desktop/phonepe project/pulse/data/aggregated/user/country/india/state/"
+path2 = "data/aggregated/user/country/india/state/"
 user_list = os.listdir(path2)
 
 col2 = {'State': [], 'Year': [], 'Quater': [], 'brands': [], 'Count': [],
@@ -100,7 +100,7 @@ df_aggregated_user = pd.DataFrame(col2)
 
 # TO GET THE DATA-FRAME OF MAP <--> TRANSACTION
 
-path3 = "C:/Users/Admin/Desktop/phonepe project/pulse/data/map/transaction/hover/country/india/state/"
+path3 = "data/map/transaction/hover/country/india/state/"
 hover_list = os.listdir(path3)
 
 col3 = {'State': [], 'Year': [], 'Quater': [], 'District': [], 'count': [],
@@ -133,7 +133,7 @@ df_map_transaction = pd.DataFrame(col3)
 
 # TO GET THE DATA-FRAME OF MAP <--> USER
 
-path4 = "C:/Users/Admin/Desktop/phonepe project/pulse/data/map/user/hover/country/india/state/"
+path4 = "data/map/user/hover/country/india/state/"
 map_list = os.listdir(path4)
 
 col4 = {"State": [], "Year": [], "Quater": [], "District": [],
@@ -165,7 +165,7 @@ df_map_user = pd.DataFrame(col4)
 
 # TO GET THE DATA-FRAME OF TOP <--> TRANSACTION
 
-path5 = "C:/Users/Admin/Desktop/phonepe project/pulse/data/top/transaction/country/india/state/"
+path5 = "data/top/transaction/country/india/state/"
 TOP_list = os.listdir(path5)
 
 col5 = {'State': [], 'Year': [], 'Quater': [], 'District': [], 'Transaction_count': [],
@@ -198,7 +198,7 @@ df_top_transaction = pd.DataFrame(col5)
 
 # TO GET THE DATA-FRAME OF TOP <--> USER
 
-path6 = "C:/Users/Admin/Desktop/phonepe project/pulse/data/top/user/country/india/state/"
+path6 = "data/top/user/country/india/state/"
 USER_list = os.listdir(path6)
 
 col6 = {'State': [], 'Year': [], 'Quater': [], 'District': [],
