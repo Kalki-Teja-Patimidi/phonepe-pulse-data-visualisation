@@ -7,7 +7,7 @@ import pandas as pd
 import sqlite3
 import plotly.express as px
 import requests
-os.walk
+#os.walk
 
 # To clone the data directly from github to current working directory
 response = requests.get('https://api.github.com/repos/PhonePe/pulse')
