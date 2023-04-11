@@ -17,12 +17,12 @@ import plotly.express as px
 #clone_dir = os.path.join(os.getcwd(), repo_name)
 
 
-phn=Image.open('C:/Users/Admin/Desktop/phonepe project/images/phonepe-logo-icon.png')
-phn1=Image.open('C:/Users/Admin/Desktop/phonepe project/images/phonepe.png')
-mypic=Image.open('C:/Users/Admin/Desktop/phonepe project/images/mypic.jpg')
-video_file = open('C:/Users/Admin/Desktop/phonepe project/vedios/Phonepe.mp4', 'rb')
+phn=Image.open('images/phonepe-logo-icon.png')
+phn1=Image.open('images/phonepe.png')
+mypic=Image.open('images/mypic.jpg')
+video_file = open('vedios/Phonepe.mp4', 'rb')
 video1 = video_file.read()
-vedio_file1=open('C:/Users/Admin/Desktop/phonepe project/vedios/phonepesample.mp4','rb')
+vedio_file1=open('vedios/phonepesample.mp4','rb')
 vedio2=vedio_file1.read()
 st.set_page_config(page_title='PhonePe Pulse',page_icon=phn,layout='wide')
 st.title(' PhonePe Pulse Data Visualization ')
