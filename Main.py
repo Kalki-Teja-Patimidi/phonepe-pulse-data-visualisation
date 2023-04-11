@@ -25,7 +25,7 @@ video1 = video_file.read()
 vedio_file1=open('vedios/phonepesample.mp4','rb')
 vedio2=vedio_file1.read()
 st.set_page_config(page_title='PhonePe Pulse',page_icon=phn,layout='wide')
-st.title('violet[ PhonePe Pulse Data Visualization ]')
+st.title(':violet[ PhonePe Pulse Data Visualization ]')
 
 # reading the data from csv files
 df_aggregated_transaction=pd.read_csv('aggregated_transaction.csv')
