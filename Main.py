@@ -28,7 +28,7 @@ st.set_page_config(page_title='PhonePe Pulse',page_icon=phn,layout='wide')
 st.title(':violet[ PhonePe Pulse Data Visualization ]')
 
 # reading the data from csv files
-df_aggregated_transaction=pd.read_csv('aggregated_transaction.csv')
+df_aggregated_transaction=pd.read_csv('agregated_transaction.csv')
 
 # TO GET THE DATA-FRAME OF AGGREGATED <--> USER
 df_aggregated_user=pd.read_csv('aggregated_user.csv')
