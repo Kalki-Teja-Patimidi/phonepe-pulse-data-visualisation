@@ -61,7 +61,7 @@ for i in Agg_state_list:
 # Successfully created a dataframe
 df_aggregated_transaction=pd.DataFrame(clm)
 # print(df_aggregated_transaction)
-
+df_aggregated_transaction=pd.read_csv('aggregated_transaction.csv')
 # TO GET THE DATA-FRAME OF AGGREGATED <--> USER
 
 path2 = "/content/pulse/data/aggregated/user/country/india/state/"
@@ -97,7 +97,7 @@ for i in user_list:
                 pass
 df_aggregated_user = pd.DataFrame(col2)
 # print(df_aggregated_user)
-
+df_aggregated_user=pd.read_csv('aggregated_user.csv')
 # TO GET THE DATA-FRAME OF MAP <--> TRANSACTION
 
 path3 = "/content/pulse/data/map/transaction/hover/country/india/state/"
@@ -162,7 +162,7 @@ for i in map_list:
                 col4['Quater'].append(int(k.strip('.json')))
 df_map_user = pd.DataFrame(col4)
 # print(df_map_user)
-
+df_map_user=pd.read_csv('map_user.csv')
 # TO GET THE DATA-FRAME OF TOP <--> TRANSACTION
 
 path5 = "/content/pulse/data/top/transaction/country/india/state/"
@@ -195,7 +195,7 @@ for i in TOP_list:
                 col5['Quater'].append(int(k.strip('.json')))
 df_top_transaction = pd.DataFrame(col5)
 # print(df_top_transaction)
-
+df_top_transaction=pd.read_csv('top_transaction.csv')
 # TO GET THE DATA-FRAME OF TOP <--> USER
 
 path6 = "/content/pulse/data/top/user/country/india/state/"
@@ -226,7 +226,7 @@ for i in USER_list:
                 col6['Quater'].append(int(k.strip('.json')))
 df_top_user = pd.DataFrame(col6)
 # print(df_top_user)
-
+df_top_user=pd.read_csv('top_user.csv')
 # CHECKING FOR MISSING VALUES,NULL VALUES
 
 # df_aggregated_transaction.info()
