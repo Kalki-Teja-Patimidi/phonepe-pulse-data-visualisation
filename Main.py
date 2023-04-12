@@ -240,7 +240,7 @@ if SELECT == "Contact":
     name = " PALEM RAVI CHANDRA "
     mail = (f'{"Mail :"}  {"palemravichandra21a@gmail.com"}')
     social_media = {"GITHUB": "https://github.com/Palemravichandra ",
-                    "LINKEDIN": "www.linkedin.com/in/palemravichandra"
+                    "LINKEDIN": "https://www.linkedin.com/in/palemravichandra123/"
                     }
     col1,  col2 = st.columns(2)
     with col1:
