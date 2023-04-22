@@ -1,7 +1,7 @@
 
 # This is my Phonepe pulse data  visualization from 2018-2022 project
 
-# Importing required libraries
+#### Importing required libraries
 ```python
 import streamlit as st
 from PIL import Image
@@ -12,7 +12,7 @@ import pandas as pd
 import sqlite3
 import plotly.express as px
 ```
-# if the module shows any error or module not found it can be overcome by using below command
+#### if the module shows any error or module not found it can be overcome by using below command
 
 ```python
 pip install<module name>
