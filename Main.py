@@ -320,169 +320,328 @@ if SELECT =="Search":
         cursor.execute(f"SELECT State,Year,Quater,District,RegisteredUser FROM map_user WHERE Year = '{_year}' AND State = '{_state}' AND District = '{_dist}' ORDER BY State,Year,Quater,District")
         df = pd.DataFrame(cursor.fetchall(), columns=['State', 'Year',"Quater", 'District', 'RegisteredUser'])
         return df
-
-
-    if choice_topic=="Transaction-Type":
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.subheader(" TRANSACTION TYPE ")
-            transaction_type = st.selectbox("search by", ["Choose an option", "Financial Services",
-                                                          "Merchant payments", "Peer-to-peer payments",
-                                                          "Recharge & bill payments", "Others"], 0)
-        with col2:
-            st.subheader(" SELECT THE YEAR ")
-            choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
-        with col3:
-            st.subheader(" SELECT STATE ")
-            menu_state = ['', 'andaman-&-nicobar-islands', 'andhra-pradesh', 'arunachal-pradesh',
-                          'assam', 'bihar', 'chandigarh', 'chhattisgarh', 'dadra-&-nagar-haveli-&-daman-&-diu',
-                          'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand',
-                          'karnataka', 'kerala', 'ladakh', 'lakshadweep', 'madhya-pradesh', 'maharashtra', 'manipur',
-                          'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim',
-                          'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
+    
+    if choice_topic == "Transaction-Type":
+        select = st.selectbox('SELECT VIEW', ['Tabular view', 'Plotly View'], 0)
+        if select=='Tabular view':
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.subheader(" SELECT TYPE OF TRANSACTION ")
+                transaction_type = st.selectbox("search by", ["Peer-to-peer payments","Merchant payments", "Financial Services","Recharge & bill payments", "Others"], 0)
+            with col2:
+                st.subheader("SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+            with col3:
+                st.subheader(" SELECT STATES ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
             choice_state = st.selectbox("State", menu_state, 0)
 
-        if transaction_type:
-            col1,col2,col3, = st.columns(3)
+            if transaction_type:
+                col1, col2, col3, = st.columns(3)
+                with col1:
+                    st.subheader(f'Table view of {transaction_type}')
+                    st.write(type_(transaction_type))
+
+            if transaction_type and choice_year:
+                with col2:
+                    st.subheader(f' in {choice_year}')
+                    st.write(type_year(choice_year, transaction_type))
+            if transaction_type and choice_state and choice_year:
+                with col3:
+                    st.subheader(f' in {choice_state}')
+                    st.write(type_state(choice_state, choice_year, transaction_type))
+        else:
+            col1, col2,col3 = st.columns(3)
             with col1:
-                st.subheader(f'{transaction_type}')
-                st.write(type_(transaction_type))
-        if transaction_type and choice_year:
+                st.subheader(" SELECT TYPE OF TRANSACTION ")
+                transaction_type = st.selectbox("search by", ["Peer-to-peer payments","Merchant payments", "Financial Services","Recharge & bill payments", "Others"], 0)
+                if transaction_type:
+                    df = type_(transaction_type)
+                    fig = px.bar(df, x="State", y="Transaction_amount", title=f'Plotly view of {transaction_type}',color='Year')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
             with col2:
-                st.subheader(f' in {choice_year}')
-                st.write(type_year(choice_year,transaction_type))
-        if transaction_type and choice_state and choice_year:
+                st.subheader(" SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+                if transaction_type and choice_year:
+                    df = type_year(choice_year, transaction_type)
+                    fig = px.bar(df, x="State", y="Transaction_amount",title=f"Plotly view of {transaction_type} in {choice_year}",color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
             with col3:
-                st.subheader(f' in {choice_state}')
-                st.write(type_state(choice_state,choice_year,transaction_type))
-
-    if choice_topic=="District":
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.subheader(" SELECT STATE ")
-            menu_state = ['', 'andaman-&-nicobar-islands', 'andhra-pradesh', 'arunachal-pradesh',
-                          'assam', 'bihar', 'chandigarh', 'chhattisgarh', 'dadra-&-nagar-haveli-&-daman-&-diu',
-                          'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand',
-                          'karnataka', 'kerala', 'ladakh', 'lakshadweep', 'madhya-pradesh', 'maharashtra', 'manipur',
-                          'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim',
-                          'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
-            choice_state = st.selectbox("State", menu_state, 0)
-        with col2:
-            st.subheader(" SELECT YEAR ")
-            choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
-        with col3:
-            st.subheader(" SELECT DISTRICT ")
-            district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
-        if choice_state:
-            col1,col2,col3 = st.columns(3)
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                                  'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana','jammu-&-kashmir',
+                                  'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                                  'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                                  'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi',
+                                  'tripura','chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+                if transaction_type and choice_state and choice_year:
+                    df = type_state(choice_state, choice_year, transaction_type)
+                    fig = px.bar(df, x="Quater", y="Transaction_amount",title=f" {transaction_type} in {choice_year} at {choice_state}",color="Quater")
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+    if choice_topic == "District":
+        select = st.selectbox('View', ['Tabular view', 'Plotly View'], 0)
+        if select == 'Tabular view':
+            col1, col2, col3 = st.columns(3)
             with col1:
-                st.subheader(f'{choice_state}')
-                st.write(district_choice_state(choice_state))
-        if choice_year and choice_state:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
             with col2:
-                st.subheader(f'in {choice_year} ')
-                st.write(dist_year_state(choice_year,choice_state))
-        if district and choice_state and choice_year:
+                st.subheader(" SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
             with col3:
-                st.subheader(f'in {district} ')
-                st.write(district_year_state(district,choice_year,choice_state))
-
-    if choice_topic=="Brand":
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.subheader(" SELECT BRAND ")
-            mobiles = ['', 'Apple', 'Asus', 'COOLPAD', 'Gionee', 'HMD Global', 'Huawei',
-                       'Infinix', 'Lava', 'Lenovo', 'Lyf', 'Micromax', 'Motorola', 'OnePlus',
-                       'Oppo','Realme', 'Samsung', 'Tecno', 'Vivo', 'Xiaomi','Others']
-            brand_type = st.selectbox("search by",mobiles, 0)
-        with col2:
-            st.subheader(" SELECT YEAR ")
-            choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
-        with col3:
-            st.subheader(" SELECT STATE ")
-            menu_state = ['', 'andaman-&-nicobar-islands', 'andhra-pradesh', 'arunachal-pradesh',
-                          'assam', 'bihar', 'chandigarh', 'chhattisgarh', 'dadra-&-nagar-haveli-&-daman-&-diu',
-                          'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand',
-                          'karnataka', 'kerala', 'ladakh', 'lakshadweep', 'madhya-pradesh', 'maharashtra', 'manipur',
-                          'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim',
-                          'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
-            choice_state = st.selectbox("State", menu_state, 0)
-
-        if brand_type:
-            col1,col2,col3, = st.columns(3)
+                st.subheader(" SELECT DISTRICT ")
+                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+            if choice_state:
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.subheader(f'{choice_state}')
+                    st.write(district_choice_state(choice_state))
+            if choice_year and choice_state:
+                with col2:
+                    st.subheader(f'in {choice_year} ')
+                    st.write(dist_year_state(choice_year, choice_state))
+            if district and choice_state and choice_year:
+                with col3:
+                    st.subheader(f'in {district} ')
+                    st.write(district_year_state(district, choice_year, choice_state))
+        else:
+            col1, col2, col3 = st.columns(3)
             with col1:
-                st.subheader(f'{brand_type}')
-                st.write(brand_(brand_type))
-        if brand_type and choice_year:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+                if choice_state:
+                    df=district_choice_state(choice_state)
+                    fig = px.bar(df, x="District", y="amount", title=f'Users in {choice_state}',color='Year')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
             with col2:
-                st.subheader(f' in {choice_year}')
-                st.write(brand_year(brand_type,choice_year))
-        if brand_type and choice_state and choice_year:
+                st.subheader(" SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+                df=dist_year_state(choice_year, choice_state)
+                fig = px.bar(df, x="District", y="amount", title=f'Users in  {choice_state} in {choice_year}',color='Quater')
+                st.plotly_chart(fig, theme=None, use_container_width=True)
             with col3:
-                st.subheader(f' in {choice_state}')
-                st.write(brand_state(choice_state,brand_type,choice_year))
-
-    if choice_topic=="Top-Transactions":
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.subheader(" SELECT STATE ")
-            menu_state = ['', 'andaman-&-nicobar-islands', 'andhra-pradesh', 'arunachal-pradesh',
-                          'assam', 'bihar', 'chandigarh', 'chhattisgarh', 'dadra-&-nagar-haveli-&-daman-&-diu',
-                          'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand',
-                          'karnataka', 'kerala', 'ladakh', 'lakshadweep', 'madhya-pradesh', 'maharashtra', 'manipur',
-                          'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim',
-                          'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
-            choice_state = st.selectbox("State", menu_state, 0)
-        with col2:
-            st.subheader(" SELECT YEAR ")
-            choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
-        with col3:
-            st.subheader(" SELECT Quater ")
-            menu_quater = ["", "1", "2", "3", "4"]
-            choice_quater = st.selectbox("Quater", menu_quater, 0)
-
-        if choice_state:
+                st.subheader(" SELECT DISTRICT ")
+                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+                df=district_year_state(district, choice_year, choice_state)
+                fig = px.bar(df, x="Quater", y="amount",title=f"Users {district} in {choice_year} at {choice_state}",color='Quater')
+                st.plotly_chart(fig, theme=None, use_container_width=True)
+    if choice_topic == "Brand":
+        select = st.selectbox('View', ['Tabular view', 'Plotly View'], 0)
+        if select == 'Tabular view':
+            col1, col2, col3 = st.columns(3)
             with col1:
-                st.subheader(f'{choice_state}')
-                st.write(transaction_state(choice_state))
-        if choice_state and choice_year:
+                st.subheader(" SELECT BRAND ")
+                mobiles = ["", 'Xiaomi', 'Vivo', 'Samsung', 'Oppo', 'Realme', 'Apple', 'Huawei', 'Motorola', 'Tecno',
+                           'Infinix','Lenovo', 'Lava', 'OnePlus', 'Micromax', 'Asus', 'Gionee', 'HMD Global', 'COOLPAD', 'Lyf','Others']
+                brand_type = st.selectbox("search by", mobiles, 0)
             with col2:
-                st.subheader(f'{choice_year}')
-                st.write(transaction_year(choice_state,choice_year))
-        if choice_state and choice_quater:
+                st.subheader(" SELECT YEAR")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
             with col3:
-                st.subheader(f'{choice_quater}')
-                st.write(transaction_quater(choice_state,choice_year,choice_quater))
-
-    if choice_topic=="Registered-users":
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.subheader(" SELECT STATE ")
-            menu_state = ['', 'andaman-&-nicobar-islands', 'andhra-pradesh', 'arunachal-pradesh',
-                          'assam', 'bihar', 'chandigarh', 'chhattisgarh', 'dadra-&-nagar-haveli-&-daman-&-diu',
-                          'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand',
-                          'karnataka', 'kerala', 'ladakh', 'lakshadweep', 'madhya-pradesh', 'maharashtra', 'manipur',
-                          'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim',
-                          'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
-            choice_state = st.selectbox("State", menu_state, 0)
-        with col2:
-            st.subheader(" SELECT YEAR ")
-            choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
-        with col3:
-            st.subheader(" SELECT DISTRICT ")
-            district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
-
-        if choice_state:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+            if brand_type:
+                col1, col2, col3, = st.columns(3)
+                with col1:
+                    st.subheader(f'{brand_type}')
+                    st.write(brand_(brand_type))
+            if brand_type and choice_year:
+                with col2:
+                    st.subheader(f' in {choice_year}')
+                    st.write(brand_year(brand_type, choice_year))
+            if brand_type and choice_state and choice_year:
+                with col3:
+                    st.subheader(f' in {choice_state}')
+                    st.write(brand_state(choice_state, brand_type, choice_year))
+        else:
+            col1, col2, col3 = st.columns(3)
             with col1:
-                st.subheader(f'{choice_state}')
-                st.write(registered_user_state(choice_state))
-        if choice_state and choice_year:
+                st.subheader(" SELECT BRAND ")
+                mobiles = ["", 'Xiaomi', 'Vivo', 'Samsung', 'Oppo', 'Realme', 'Apple', 'Huawei', 'Motorola', 'Tecno',
+                           'Infinix','Lenovo', 'Lava', 'OnePlus', 'Micromax', 'Asus', 'Gionee', 'HMD Global', 'COOLPAD', 'Lyf','Others']
+                brand_type = st.selectbox("search by", mobiles, 0)
+                if brand_type:
+                    df=brand_(brand_type)
+                    fig = px.bar(df, x="State", y="Percentage",title=f" {brand_type} Users ",color='Year')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
             with col2:
-                st.subheader(f'{choice_year}')
-                st.write(registered_user_year(choice_state,choice_year))
-        if choice_state and choice_year and district:
+                st.subheader(" SELECT YEAR")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+                if brand_type and choice_year:
+                    df=brand_year(brand_type, choice_year)
+                    fig = px.bar(df, x="State", y="Percentage",title=f"{brand_type} Users in {choice_year}",color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
             with col3:
-                st.subheader(f'{district}')
-                st.write(registered_user_district(choice_state,choice_year,district))
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+                if brand_type and choice_state and choice_year:
+                    df=brand_state(choice_state, brand_type, choice_year)
+                    fig = px.bar(df, x="Quater", y="Percentage",title=f"{brand_type} Users in {choice_year} at {choice_state}",color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
+    if choice_topic == "Top-Transactions":
+        select = st.selectbox('View', ['Tabular view', 'Plotly View'], 0)
+        if select == 'Tabular view':
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+            with col2:
+                st.subheader(" SELECT  YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+            with col3:
+                st.subheader(" SELECT Quarter ")
+                menu_quater = ["", "1", "2", "3", "4"]
+                choice_quater = st.selectbox("Quater", menu_quater, 0)
+
+            if choice_state:
+                with col1:
+                    st.subheader(f'{choice_state}')
+                    st.write(transaction_state(choice_state))
+            if choice_state and choice_year:
+                with col2:
+                    st.subheader(f'{choice_year}')
+                    st.write(transaction_year(choice_state, choice_year))
+            if choice_state and choice_quater:
+                with col3:
+                    st.subheader(f'{choice_quater}')
+                    st.write(transaction_quater(choice_state, choice_year, choice_quater))
+        else:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+                if choice_state:
+                    df=transaction_state(choice_state)
+                    fig = px.bar(df, x="Year", y="Transaction_count",title=f"Transactions in {choice_state}", color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
+            with col2:
+                st.subheader(" SELECT  YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+                if choice_state and choice_year:
+                    df=transaction_year(choice_state, choice_year)
+                    fig = px.bar(df, x="Year", y="Transaction_count",title=f"Transactions{choice_year} at {choice_state}", color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
+            with col3:
+                st.subheader(" SELECT Quarter ")
+                menu_quater = ["", "1", "2", "3", "4"]
+                choice_quater = st.selectbox("Quater", menu_quater, 0)
+                if choice_state and choice_quater:
+                    df=transaction_quater(choice_state, choice_year, choice_quater)
+                    fig = px.bar(df, x="Quater", y="Transaction_count",title=f"Transactions in {choice_year} at {choice_state} in Quarter {choice_quater}", color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+
+    if choice_topic == "Registered-users":
+        select = st.selectbox('View', ['Tabular view', 'Plotly View'], 0)
+        if select == 'Tabular view':
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+            with col2:
+                st.subheader(" SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+            with col3:
+                st.subheader(" SELECT DISTRICT ")
+                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+
+            if choice_state:
+                with col1:
+                    st.subheader(f'{choice_state}')
+                    st.write(registered_user_state(choice_state))
+            if choice_state and choice_year:
+                with col2:
+                    st.subheader(f'{choice_year}')
+                    st.write(registered_user_year(choice_state, choice_year))
+            if choice_state and choice_year and district:
+                with col3:
+                    st.subheader(f'{district}')
+                    st.write(registered_user_district(choice_state, choice_year, district))
+        else:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.subheader(" SELECT STATE ")
+                menu_state = ["", 'uttar-pradesh', 'jharkhand', 'puducherry', 'rajasthan', 'odisha', 'nagaland',
+                              'chandigarh', 'dadra-&-nagar-haveli-&-daman-&-diu', 'assam', 'haryana', 'jammu-&-kashmir',
+                              'tamil-nadu', 'himachal-pradesh', 'ladakh', 'bihar', 'maharashtra', 'uttarakhand',
+                              'karnataka', 'lakshadweep', 'andhra-pradesh', 'sikkim', 'madhya-pradesh', 'mizoram',
+                              'kerala', 'manipur', 'arunachal-pradesh', 'andaman-&-nicobar-islands', 'delhi', 'tripura',
+                              'chhattisgarh', 'meghalaya', 'goa', 'west-bengal', 'telangana', 'gujarat', 'punjab']
+                choice_state = st.selectbox("State", menu_state, 0)
+                if choice_state:
+                    df=registered_user_state(choice_state)
+                    fig = px.bar(df, x="District", y="RegisteredUser",title=f"Registered users at {choice_state} ",color='Year')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+            with col2:
+                st.subheader(" SELECT YEAR ")
+                choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
+                if choice_state and choice_year:
+                    df=registered_user_year(choice_state, choice_year)
+                    fig = px.bar(df, x="District", y="RegisteredUser",title=f"Registered users in {choice_state} in {choice_year}",color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
+            with col3:
+                st.subheader("SELECT DISTRICT ")
+                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+                if choice_state and choice_year and district:
+                    df=registered_user_district(choice_state, choice_year, district)
+                    fig = px.bar(df, x="Quater", y="RegisteredUser",title=f"Registered users at {choice_state} in {choice_year} in {district}",color='Quater')
+                    st.plotly_chart(fig, theme=None, use_container_width=True)
 
 
+
+
+
+
+       
