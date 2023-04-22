@@ -581,7 +581,9 @@ if SELECT =="Search":
                 choice_year = st.selectbox("Year", ["", "2018", "2019", "2020", "2021", "2022"], 0)
             with col3:
                 st.subheader(" SELECT DISTRICT ")
-                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+                dist=df_map_transaction["District"].unique().tolist()
+                dist.sort()
+                district = st.selectbox("search by",dist )
 
             if choice_state:
                 with col1:
@@ -617,7 +619,9 @@ if SELECT =="Search":
                     st.plotly_chart(fig, theme=None, use_container_width=True)
             with col3:
                 st.subheader("SELECT DISTRICT ")
-                district = st.selectbox("search by", df_map_transaction["District"].unique().tolist())
+                dist=df_map_transaction["District"].unique().tolist()
+                dist.sort()
+                district = st.selectbox("search by",dist)
                 if choice_state and choice_year and district:
                     df=registered_user_district(choice_state, choice_year, district)
                     fig = px.bar(df, x="Quater", y="RegisteredUser",title=f"Registered users at {choice_state} in {choice_year} in {district}",color='Quater')
