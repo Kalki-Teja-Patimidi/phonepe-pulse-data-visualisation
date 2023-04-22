@@ -337,7 +337,7 @@ if SELECT =="Search":
                               'delhi', 'goa', 'gujarat', 'haryana', 'himachal-pradesh', 'jammu-&-kashmir', 'jharkhand', 'karnataka', 'kerala', 'ladakh','lakshadweep', 'madhya-pradesh', 
                               'maharashtra', 'manipur', 'meghalaya', 'mizoram', 'nagaland', 'odisha', 'puducherry', 'punjab', 'rajasthan', 'sikkim', 
                               'tamil-nadu', 'telangana', 'tripura', 'uttar-pradesh', 'uttarakhand', 'west-bengal']
-            choice_state = st.selectbox("State", menu_state, 0)
+                choice_state = st.selectbox("State", menu_state, 0)
 
             if transaction_type:
                 col1, col2, col3, = st.columns(3)
