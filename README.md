@@ -27,7 +27,6 @@ clone_url = repo['clone_url']
 repo_name = "pulse"
 clone_dir = os.path.join(os.getcwd(), repo_name)
 ```
-### Create the app using streamlit[Reference](https://docs.streamlit.io/library/api-reference)
 ### Creating csv file 
 - after cloning the data from github the dat in the form of json file
 - In order to convert json file into data frame we use below code
@@ -70,5 +69,6 @@ WHERE "Condition"
 GROUP BY "Columns"
 ORDER BY "Data"
 ```
+- create the streamlit app with basic tabs [Reference](https://docs.streamlit.io/library/api-reference)
 - visualizing the data with plotly and streamlit
 #### I hope this project helps you to the understand more about phonepe
